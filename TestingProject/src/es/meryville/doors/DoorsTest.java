@@ -12,8 +12,7 @@ public class DoorsTest {
 		Door door = new Door();		
 		door.setToCertainDeath(true);
 		boolean youLive= door.enter();		
-		assertTrue(!youLive);
-		
+		assertTrue(!youLive);		
 	}
 	
 	@Test
@@ -22,8 +21,7 @@ public class DoorsTest {
 		door.setAllwaysTellsTheTruth(true);
 		door.setToCertainDeath(true);	
 		boolean response = door.askToCertainDeath();
-		assertTrue(response);
-		
+		assertTrue(response);		
 	
 	}
 	
@@ -31,9 +29,8 @@ public class DoorsTest {
 	public void testDoorAskOtherDoor(){		
 		Door door = new Door();		
 		door.setAllwaysTellsTheTruth(true);
-		door.setToCertainDeath(true);	
-		boolean response = door.askToCertainDeath();
-		assertTrue(response);
+		door.setToCertainDeath(true);			
+		assertTrue(door.askToCertainDeath());
 		
 	
 	}

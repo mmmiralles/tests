@@ -1,8 +1,8 @@
 package es.meryville.doors;
 
 public class Door {
-	boolean certainDeath;
-	boolean allwaysTellsTheTruth;
+	private boolean certainDeath;
+	private boolean allwaysTellsTheTruth;
 
 	public void setToCertainDeath(boolean b) {
 		 this.certainDeath=b ;		
@@ -18,8 +18,12 @@ public class Door {
 	}
 
 	public boolean askToCertainDeath() {
-	
-		return false;
+	    if (allwaysTellsTheTruth){
+	    	return certainDeath;
+	    }else {
+	    	return !certainDeath; 
+	    }
+		
 	}
 
 }
