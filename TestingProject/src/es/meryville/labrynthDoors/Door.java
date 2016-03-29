@@ -1,4 +1,4 @@
-package es.meryville.doors;
+package es.meryville.labrynthDoors;
 
 public class Door {
 	private boolean certainDeath;
@@ -23,6 +23,15 @@ public class Door {
 	    }else {
 	    	return !certainDeath; 
 	    }
+		
+	}
+
+	public boolean askToCertainDeath(Door doorTwo) {
+		if (allwaysTellsTheTruth){
+	    	return doorTwo.askToCertainDeath();
+	    }else {
+	    	return !doorTwo.askToCertainDeath(); 
+	    }		
 		
 	}
 

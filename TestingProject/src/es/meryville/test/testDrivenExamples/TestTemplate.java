@@ -1,4 +1,4 @@
-package es.meryville.test;
+package es.meryville.test.testDrivenExamples;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

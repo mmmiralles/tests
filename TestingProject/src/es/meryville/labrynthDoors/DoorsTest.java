@@ -1,4 +1,4 @@
-package es.meryville.doors;
+package es.meryville.labrynthDoors;
 
 import static org.junit.Assert.*;
 
@@ -27,11 +27,14 @@ public class DoorsTest {
 	
 	@Test
 	public void testDoorAskOtherDoor(){		
-		Door door = new Door();		
-		door.setAllwaysTellsTheTruth(true);
-		door.setToCertainDeath(true);			
-		assertTrue(door.askToCertainDeath());
+		Door doorOne = new Door();		
+		doorOne.setAllwaysTellsTheTruth(true);
+		doorOne.setToCertainDeath(true);	
+		Door doorTwo = new Door();		
+		doorTwo.setAllwaysTellsTheTruth(false);
+		doorTwo.setToCertainDeath(false);			
 		
-	
+		assertTrue(doorOne.askToCertainDeath(doorTwo));		
+		assertTrue(!doorTwo.askToCertainDeath(doorOne));		
 	}
 }
