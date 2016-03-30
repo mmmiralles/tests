@@ -1,40 +1,49 @@
 package es.meryville.labrynthDoors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class DoorsTest {	
 	
+	Door truthfulDoorToCertainDeath;
+	
+	@Before
+	public void CreateTruthfulDoorToCertainDeath(){	
+	 truthfulDoorToCertainDeath = new Door();				
+	 truthfulDoorToCertainDeath.setToCertainDeath(true);
+	 truthfulDoorToCertainDeath.setAllwaysTellsTheTruth(true);
+	}
+	
+	
 
 	@Test
 	public void TestDoorToCertainDeath(){		
-		Door door = new Door();		
-		door.setToCertainDeath(true);
-		boolean youLive= door.enter();		
-		assertTrue(!youLive);		
+		
+		assertTrue(!truthfulDoorToCertainDeath.enter());		
 	}
 	
 	@Test
-	public void testDoorAllwaysRight(){		
-		Door door = new Door();		
-		door.setAllwaysTellsTheTruth(true);
-		door.setToCertainDeath(true);	
-		boolean response = door.askToCertainDeath();
-		assertTrue(response);		
-	
+	public void testDoorAllwaysTellsTheTruth(){						
+		assertTrue(truthfulDoorToCertainDeath.askToCertainDeath());			
 	}
+	
+	@Test
+	public void testDoorAllwaysLies(){					
+		truthfulDoorToCertainDeath.setAllwaysTellsTheTruth(false);		
+		assertTrue(!truthfulDoorToCertainDeath.askToCertainDeath());			
+	}
+	
 	
 	@Test
 	public void testDoorAskOtherDoor(){		
-		Door doorOne = new Door();		
-		doorOne.setAllwaysTellsTheTruth(true);
-		doorOne.setToCertainDeath(true);	
+		
 		Door doorTwo = new Door();		
 		doorTwo.setAllwaysTellsTheTruth(false);
-		doorTwo.setToCertainDeath(false);			
+		doorTwo.setToCertainDeath(false);		
 		
-		assertTrue(doorOne.askToCertainDeath(doorTwo));		
-		assertTrue(!doorTwo.askToCertainDeath(doorOne));		
+		assertTrue(truthfulDoorToCertainDeath.askToCertainDeath(doorTwo));		
+		assertTrue(!doorTwo.askToCertainDeath(truthfulDoorToCertainDeath));		
 	}
 }
