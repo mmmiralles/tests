@@ -1,8 +1,11 @@
 package es.meryville.test.testDrivenExamples;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Template {
 	private Map<String, String> variables;
@@ -15,16 +18,40 @@ public class Template {
 
 	public void set(String name, String value) {
 		this.variables.put(name, value);
-		
+
 	}
 
-	public Object evaluate() {
-		String result = templateText;
-		for (Entry<String, String> entry : variables.entrySet()) {
-			String regex = "\\$\\{" + entry.getKey() + "\\}";
-			result = result.replaceAll(regex, entry.getValue());
+
+	public String evaluate() throws MissingValueException {
+		TemplateParse parser = new TemplateParse();
+		List<String> segments = parser.parse(templateText);
+		StringBuilder result = new StringBuilder();
+		for (String segment : segments) {
+			append(segment, result);
 		}
-		return result;
+		return result.toString();
 	}
+
+	private void append(String segment, StringBuilder result) throws MissingValueException {
+		if (isVariable(segment)) {
+			evaluateVariable(segment, result);
+		} else {
+			result.append(segment);
+		}
+	}
+
+	private boolean isVariable(String segment) {
+		return segment.startsWith("${") && segment.endsWith("}");
+	}
+
+	private void evaluateVariable(String segment, StringBuilder result) throws MissingValueException {
+		String var = segment.substring(2, segment.length() - 1);
+		if (!variables.containsKey(var)) {
+			throw new MissingValueException("No value for " + segment);
+		}
+		result.append(variables.get(var));
+	}
+
+
 
 }

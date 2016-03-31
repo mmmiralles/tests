@@ -1,3 +1,5 @@
+package es.meryville.test.testDrivenExamples;
+
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -24,7 +26,8 @@ public class TestTemplate {
 		assertTemplateEvaluatesTo("1, 2, 3");
 	}
 
-	private void assertTemplateEvaluatesTo(String expected) {
+	private void assertTemplateEvaluatesTo(String expected)
+			throws MissingValueException {
 		assertEquals(expected, template.evaluate());
 	}
 
@@ -35,6 +38,15 @@ public class TestTemplate {
 			fail("evaluate() should throw an exception if "
 					+ "a variable was left without a value!");
 		} catch (MissingValueException expected) {
+			assertEquals("No value for ${foo}", expected.getMessage());
 		}
+	}
+
+	@Test
+	public void variablesGetProcessedJustOnce() throws Exception {
+		template.set("one", "${one}");
+		template.set("two", "${three}");
+		template.set("three", "${two}");
+		assertTemplateEvaluatesTo("${one}, ${three}, ${two}");
 	}
 }
